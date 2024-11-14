@@ -7,10 +7,11 @@ import multer from "multer";
 import path from "path";
 import dotenv from "dotenv"
 const app = express();
+import cookieParser from "cookie-parser";
 // import { uploadOnCloudinary } from "./untils/cloudinary.js";
 app.use(express.json());
 app.use(cors());
-
+app.use(cookieParser())
 dotenv.config({
   path: './env'
 })
@@ -176,6 +177,7 @@ app.post("/login",async (req,res)=>{
         }
       }
       const token = jwt.sign(data,'secret_ecom');
+      res.cookie("auth",data)
       res.json({success:true,token});
     }
     else{
